@@ -2,13 +2,20 @@ import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import TextButton from '../../components/TextButton';
 import {HOME_STRINGS} from '../../constants/strings';
+import {navigate} from '../navigation/RootNavigation';
 
 const HomeScreen: React.FC = () => {
   const renderButtons = () => {
     return (
       <View style={styles.buttonsView}>
-        <TextButton title={HOME_STRINGS.start} onPress={() => {}} />
-        <TextButton title={HOME_STRINGS.Scoreboard} onPress={() => {}} />
+        <TextButton
+          title={HOME_STRINGS.start}
+          onPress={() => navigate('SimonGame')}
+        />
+        <TextButton
+          title={HOME_STRINGS.Scoreboard}
+          onPress={() => navigate('Scoreboard')}
+        />
       </View>
     );
   };
