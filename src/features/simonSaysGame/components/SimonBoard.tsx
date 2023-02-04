@@ -1,36 +1,62 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import ContentButton from '../../../components/ContentButton';
 import {COLORS} from '../../../constants/colors';
-import {useAppSelector} from '../../../store/store';
+import {
+  simonColorsStrings,
+  SimonSaysColors,
+} from '../../../models/simon.models';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import {nextSimonStep} from '../state/simonSaysActions';
+import {appendUserStep} from '../state/simonSaysSlice';
 
 const SimonBoard: React.FC = () => {
-  const isSimonSays = useAppSelector(state => state.simonSays.isSimonSays);
+  const dispatch = useAppDispatch();
+  //   const isSimonSays = useAppSelector(state => state.simonSays.isSimonSays);
+  const activeColor = useAppSelector(state => state.simonSays.activeColor);
+
+  const score = useAppSelector(state => state.simonSays.score);
+
+  useEffect(() => {
+    score > 0 && dispatch(nextSimonStep());
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [score]);
+
+  const simonButton = (
+    simonSaysColor: SimonSaysColors,
+    pressedColor: string,
+  ) => {
+    return (
+      <ContentButton
+        content={
+          <View
+            style={[
+              styles.button,
+              {
+                backgroundColor:
+                  activeColor === simonSaysColor
+                    ? pressedColor
+                    : simonColorsStrings[simonSaysColor],
+              },
+            ]}
+          />
+        }
+        onPress={() => dispatch(appendUserStep(simonSaysColor))}
+        // disabled={isSimonSays}
+      />
+    );
+  };
+
   return (
     <View style={styles.board}>
       <View style={styles.rowButtons}>
-        <ContentButton
-          content={<View style={[styles.button, styles.greenB]} />}
-          onPress={() => {}}
-          disabled={isSimonSays}
-        />
-        <ContentButton
-          content={<View style={[styles.button, styles.redB]} />}
-          onPress={() => {}}
-          disabled={isSimonSays}
-        />
+        {simonButton(SimonSaysColors.GREEN, COLORS.LIGHT_GREEN)}
+        {simonButton(SimonSaysColors.RED, COLORS.LIGHT_RED)}
       </View>
       <View style={styles.rowButtons}>
-        <ContentButton
-          content={<View style={[styles.button, styles.yellowB]} />}
-          onPress={() => {}}
-          disabled={isSimonSays}
-        />
-        <ContentButton
-          content={<View style={[styles.button, styles.blueB]} />}
-          onPress={() => {}}
-          disabled={isSimonSays}
-        />
+        {simonButton(SimonSaysColors.YELLOW, COLORS.LIGHT_YELLOW)}
+        {simonButton(SimonSaysColors.BLUE, COLORS.LIGHT_BLUE)}
       </View>
     </View>
   );
@@ -42,18 +68,6 @@ const styles = StyleSheet.create({
     width: 110,
     borderRadius: 55,
     margin: 8,
-  },
-  yellowB: {
-    backgroundColor: COLORS.YELLOW,
-  },
-  redB: {
-    backgroundColor: COLORS.RED,
-  },
-  blueB: {
-    backgroundColor: COLORS.BLUE,
-  },
-  greenB: {
-    backgroundColor: COLORS.GREEN,
   },
   rowButtons: {
     flexDirection: 'row',

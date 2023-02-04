@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import {SimonSaysColors} from '../../../models/simon.models';
+import {Alert} from 'react-native';
 
 export interface simonSaysState {
   isGameActive: boolean;
@@ -9,6 +10,7 @@ export interface simonSaysState {
   score: number;
   userSequence: SimonSaysColors[];
   activeColor: SimonSaysColors;
+  isUserFinished: boolean;
 }
 
 const initialState: simonSaysState = {
@@ -18,6 +20,7 @@ const initialState: simonSaysState = {
   score: 0,
   userSequence: [],
   activeColor: -1,
+  isUserFinished: false,
 };
 
 export const simonSaysSlice = createSlice({
@@ -36,9 +39,26 @@ export const simonSaysSlice = createSlice({
     incrementScore: state => {
       state.score = state.score + 1;
     },
+    resetUserSequence: state => {
+      state.userSequence = [];
+    },
     appendUserStep: (state, action: PayloadAction<SimonSaysColors>) => {
+      let isGameOver = false;
       if (state.userSequence.length < state.sequence.length) {
         state.userSequence = [...state.userSequence, action.payload];
+      }
+      if (state.userSequence.length === state.sequence.length) {
+        state.sequence.forEach((seq, index) => {
+          if (seq !== state.userSequence[index]) {
+            // alert restart game
+            Alert.alert('GAME OVER2');
+            isGameOver = true;
+          }
+        });
+        if (!isGameOver) {
+          console.log('!isGameOver');
+          state.score = state.score + 1;
+        }
       }
     },
     appendSimonStep: (state, action: PayloadAction<SimonSaysColors>) => {
@@ -46,6 +66,9 @@ export const simonSaysSlice = createSlice({
     },
     setActiveColor: (state, action: PayloadAction<SimonSaysColors>) => {
       state.activeColor = action.payload;
+    },
+    setIsUserFinished: (state, action: PayloadAction<boolean>) => {
+      state.isUserFinished = action.payload;
     },
     restartGame: () => {
       return initialState;
@@ -61,6 +84,8 @@ export const {
   appendUserStep,
   setActiveColor,
   appendSimonStep,
+  setIsUserFinished,
+  resetUserSequence,
   restartGame,
 } = simonSaysSlice.actions;
 
