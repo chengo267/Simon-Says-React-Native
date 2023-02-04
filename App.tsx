@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import AppNavigator from './src/features/navigation/AppNavigator';
+import store from './src/store/store';
+import {Provider} from 'react-redux';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -16,13 +18,15 @@ function App(): JSX.Element {
   };
 
   return (
-    <SafeAreaView style={{...backgroundStyle, ...styles.container}}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <AppNavigator />
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView style={{...backgroundStyle, ...styles.container}}>
+        <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={backgroundStyle.backgroundColor}
+        />
+        <AppNavigator />
+      </SafeAreaView>
+    </Provider>
   );
 }
 

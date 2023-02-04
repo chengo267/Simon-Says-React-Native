@@ -2,33 +2,34 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import ContentButton from '../../../components/ContentButton';
 import {COLORS} from '../../../constants/colors';
+import {useAppSelector} from '../../../store/store';
 
 const SimonBoard: React.FC = () => {
-  //DISABLE START BUTTON WHEN THE PLAY START
+  const isSimonSays = useAppSelector(state => state.simonSays.isSimonSays);
   return (
     <View style={styles.board}>
       <View style={styles.rowButtons}>
         <ContentButton
           content={<View style={[styles.button, styles.greenB]} />}
           onPress={() => {}}
-          disabled={false}
+          disabled={isSimonSays}
         />
         <ContentButton
           content={<View style={[styles.button, styles.redB]} />}
           onPress={() => {}}
-          disabled={false}
+          disabled={isSimonSays}
         />
       </View>
       <View style={styles.rowButtons}>
         <ContentButton
           content={<View style={[styles.button, styles.yellowB]} />}
           onPress={() => {}}
-          disabled={false}
+          disabled={isSimonSays}
         />
         <ContentButton
           content={<View style={[styles.button, styles.blueB]} />}
           onPress={() => {}}
-          disabled={false}
+          disabled={isSimonSays}
         />
       </View>
     </View>
