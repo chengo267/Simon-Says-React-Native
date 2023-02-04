@@ -17,13 +17,11 @@ export const getRandomSequence = () => {
 export const simonSaying = (): AppThunk => async (dispatch, getState) => {
   const sequence = getState().simonSays.sequence;
   dispatch(setIsSimonSays(true));
-  await delay(500);
+  await delay(800);
   for (let i = 0; i < sequence.length; i++) {
     await delay(800);
-
     dispatch(setActiveColor(-1));
     await delay(800);
-
     dispatch(setActiveColor(sequence[i]));
     await delay(800);
 
