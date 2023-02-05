@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import {SimonSaysColors} from '../../../models/simon.models';
 import {Alert} from 'react-native';
+import Sound from 'react-native-sound';
 
 export interface simonSaysState {
   isGameActive: boolean;
@@ -11,6 +12,7 @@ export interface simonSaysState {
   userSequence: SimonSaysColors[];
   activeColor: SimonSaysColors;
   isUserFinished: boolean;
+  sounds: (Sound | undefined)[];
 }
 
 const initialState: simonSaysState = {
@@ -21,6 +23,7 @@ const initialState: simonSaysState = {
   userSequence: [],
   activeColor: -1,
   isUserFinished: false,
+  sounds: [],
 };
 
 export const simonSaysSlice = createSlice({
@@ -70,6 +73,9 @@ export const simonSaysSlice = createSlice({
     setIsUserFinished: (state, action: PayloadAction<boolean>) => {
       state.isUserFinished = action.payload;
     },
+    setSounds: (state, action: PayloadAction<(Sound | undefined)[]>) => {
+      state.sounds = action.payload ?? [];
+    },
     restartGame: () => {
       return initialState;
     },
@@ -86,6 +92,7 @@ export const {
   appendSimonStep,
   setIsUserFinished,
   resetUserSequence,
+  setSounds,
   restartGame,
 } = simonSaysSlice.actions;
 

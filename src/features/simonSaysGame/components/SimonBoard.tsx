@@ -1,5 +1,6 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
+import Sound from 'react-native-sound';
 import ContentButton from '../../../components/ContentButton';
 import {COLORS} from '../../../constants/colors';
 import {
@@ -7,21 +8,29 @@ import {
   SimonSaysColors,
 } from '../../../models/simon.models';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {nextSimonStep} from '../state/simonSaysActions';
+import {getSounds, nextSimonStep} from '../state/simonSaysActions';
 import {appendUserStep} from '../state/simonSaysSlice';
 
 const SimonBoard: React.FC = () => {
   const dispatch = useAppDispatch();
-  //   const isSimonSays = useAppSelector(state => state.simonSays.isSimonSays);
   const activeColor = useAppSelector(state => state.simonSays.activeColor);
-
   const score = useAppSelector(state => state.simonSays.score);
+  const [sounds, setSounds] = useState<Sound[]>([]);
+
+  useEffect(() => {
+    const res = getSounds();
+    setSounds(res);
+  }, []);
 
   useEffect(() => {
     score > 0 && dispatch(nextSimonStep());
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [score]);
+
+  const userPressed = (simonSaysColor: SimonSaysColors) => {
+    dispatch(appendUserStep(simonSaysColor));
+    sounds && sounds[simonSaysColor]?.play();
+  };
 
   const simonButton = (
     simonSaysColor: SimonSaysColors,
@@ -42,7 +51,7 @@ const SimonBoard: React.FC = () => {
             ]}
           />
         }
-        onPress={() => dispatch(appendUserStep(simonSaysColor))}
+        onPress={() => userPressed(simonSaysColor)}
         // disabled={isSimonSays}
       />
     );
