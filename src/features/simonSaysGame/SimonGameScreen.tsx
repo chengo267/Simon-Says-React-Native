@@ -3,6 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import TextButton from '../../components/TextButton';
 import {HOME_STRINGS} from '../../constants/strings';
 import {useAppDispatch, useAppSelector} from '../../store/store';
+import GameOverModal from './components/GameOverModal';
 import SimonBoard from './components/SimonBoard';
 import {startGame} from './state/simonSaysActions';
 
@@ -21,8 +22,9 @@ const SimonGameScreen: React.FC = () => {
         }}
         disabled={isGameActive}
       />
-      <Text style={styles.text}>Score: {score}</Text>
+      <Text style={styles.text}>{HOME_STRINGS.score + ': ' + score}</Text>
       <SimonBoard />
+      <GameOverModal />
     </View>
   );
 };

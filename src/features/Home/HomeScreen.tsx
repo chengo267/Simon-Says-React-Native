@@ -13,7 +13,7 @@ const HomeScreen: React.FC = () => {
           onPress={() => navigate('SimonGame')}
         />
         <TextButton
-          title={HOME_STRINGS.Scoreboard}
+          title={HOME_STRINGS.scoreboard}
           onPress={() => navigate('Scoreboard')}
         />
       </View>

@@ -1,7 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import {SimonSaysColors} from '../../../models/simon.models';
-import {Alert} from 'react-native';
 import Sound from 'react-native-sound';
 
 export interface simonSaysState {
@@ -51,9 +50,7 @@ export const simonSaysSlice = createSlice({
       if (state.userSequence.length < state.sequence.length) {
         state.userSequence = [...state.userSequence, action.payload];
         const len = state.userSequence.length;
-        console.log('len', len);
         if (state.userSequence[len - 1] !== state.sequence[len - 1]) {
-          Alert.alert('GAME OVER2');
           state.isGameOver = true;
         }
       }
@@ -79,9 +76,7 @@ export const simonSaysSlice = createSlice({
     setIsGameOver: (state, action: PayloadAction<boolean>) => {
       state.isGameOver = action.payload;
     },
-    restartGame: () => {
-      return initialState;
-    },
+    restartGame: () => initialState,
   },
 });
 
