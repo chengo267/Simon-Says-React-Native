@@ -20,7 +20,7 @@ const ContentButton: React.FC<AppButtonProps> = ({
       disabled={disabled ?? false}
       style={({pressed}) => [
         {
-          opacity: pressed || disabled ? 0.8 : 1,
+          opacity: pressed ? 0.8 : 1,
         },
         style,
       ]}

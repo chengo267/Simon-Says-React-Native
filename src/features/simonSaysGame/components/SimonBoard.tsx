@@ -15,6 +15,7 @@ const SimonBoard: React.FC = () => {
   const dispatch = useAppDispatch();
   const activeColor = useAppSelector(state => state.simonSays.activeColor);
   const score = useAppSelector(state => state.simonSays.score);
+  const isSimonSays = useAppSelector(state => state.simonSays.isSimonSays);
   const [sounds, setSounds] = useState<Sound[]>([]);
 
   useEffect(() => {
@@ -52,7 +53,7 @@ const SimonBoard: React.FC = () => {
           />
         }
         onPress={() => userPressed(simonSaysColor)}
-        // disabled={isSimonSays}
+        disabled={isSimonSays}
       />
     );
   };
