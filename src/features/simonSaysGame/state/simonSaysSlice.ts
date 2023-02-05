@@ -13,6 +13,7 @@ export interface simonSaysState {
   activeColor: SimonSaysColors;
   isUserFinished: boolean;
   sounds: (Sound | undefined)[];
+  isGameOver: boolean;
 }
 
 const initialState: simonSaysState = {
@@ -24,6 +25,7 @@ const initialState: simonSaysState = {
   activeColor: -1,
   isUserFinished: false,
   sounds: [],
+  isGameOver: false,
 };
 
 export const simonSaysSlice = createSlice({
@@ -46,22 +48,20 @@ export const simonSaysSlice = createSlice({
       state.userSequence = [];
     },
     appendUserStep: (state, action: PayloadAction<SimonSaysColors>) => {
-      let isGameOver = false;
       if (state.userSequence.length < state.sequence.length) {
         state.userSequence = [...state.userSequence, action.payload];
-      }
-      if (state.userSequence.length === state.sequence.length) {
-        state.sequence.forEach((seq, index) => {
-          if (seq !== state.userSequence[index]) {
-            // alert restart game
-            Alert.alert('GAME OVER2');
-            isGameOver = true;
-          }
-        });
-        if (!isGameOver) {
-          console.log('!isGameOver');
-          state.score = state.score + 1;
+        const len = state.userSequence.length;
+        console.log('len', len);
+        if (state.userSequence[len - 1] !== state.sequence[len - 1]) {
+          Alert.alert('GAME OVER2');
+          state.isGameOver = true;
         }
+      }
+      if (
+        state.userSequence.length === state.sequence.length &&
+        !state.isGameOver
+      ) {
+        state.score = state.score + 1;
       }
     },
     appendSimonStep: (state, action: PayloadAction<SimonSaysColors>) => {
@@ -75,6 +75,9 @@ export const simonSaysSlice = createSlice({
     },
     setSounds: (state, action: PayloadAction<(Sound | undefined)[]>) => {
       state.sounds = action.payload ?? [];
+    },
+    setIsGameOver: (state, action: PayloadAction<boolean>) => {
+      state.isGameOver = action.payload;
     },
     restartGame: () => {
       return initialState;
@@ -93,6 +96,7 @@ export const {
   setIsUserFinished,
   resetUserSequence,
   setSounds,
+  setIsGameOver,
   restartGame,
 } = simonSaysSlice.actions;
 
