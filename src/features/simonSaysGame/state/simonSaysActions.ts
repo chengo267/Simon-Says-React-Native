@@ -1,6 +1,4 @@
-import {Alert} from 'react-native';
 import {MAX_SEQUENCE} from '../../../constants/strings';
-import {SimonSaysColors} from '../../../models/simon.models';
 import {AppThunk} from '../../../store/store';
 import {
   appendSimonStep,
@@ -28,25 +26,6 @@ export const simonSaying = (): AppThunk => async (dispatch, getState) => {
     dispatch(setActiveColor(-1));
   }
   dispatch(setIsSimonSays(false));
-};
-
-export const compareSequences = (
-  simonSequence: SimonSaysColors[],
-  userSequence: SimonSaysColors[],
-): boolean => {
-  if (simonSequence.length !== userSequence.length) {
-    // alert restart game
-    Alert.alert('GAME OVER1');
-    return false;
-  }
-  simonSequence.forEach((seq, index) => {
-    if (seq !== userSequence[index]) {
-      // alert restart game
-      Alert.alert('GAME OVER2');
-      return false;
-    }
-  });
-  return true;
 };
 
 export const nextSimonStep = (): AppThunk => dispatch => {
