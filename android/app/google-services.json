@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "236867165774",
+    "project_id": "simon-says-7a694",
+    "storage_bucket": "simon-says-7a694.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:236867165774:android:1ea4de4b062cce39c96d1f",
+        "android_client_info": {
+          "package_name": "com.simonsays"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "236867165774-os6ikc87gjtb49pochj9enk1dv2qu8nh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcqAJ-D1P2QgWe62KKd0ccI6RbJhqXVwc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "236867165774-os6ikc87gjtb49pochj9enk1dv2qu8nh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "236867165774-8rhvvvc783k4bi0sv77c5oe35ckkftdk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.SimonSays"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

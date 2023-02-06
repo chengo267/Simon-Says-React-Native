@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -9,6 +9,7 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import AppNavigator from './src/features/navigation/AppNavigator';
 import store from './src/store/store';
 import {Provider} from 'react-redux';
+import {login} from './src/utils/firebaseUtils';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -16,6 +17,10 @@ function App(): JSX.Element {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+
+  useEffect(() => {
+    login();
+  }, []);
 
   return (
     <Provider store={store}>
