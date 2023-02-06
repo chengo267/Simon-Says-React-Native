@@ -3,10 +3,9 @@ import {StyleSheet, Text, View} from 'react-native';
 import TextButton from '../../../components/TextButton';
 import {GAME_OVER_STRINGS, HOME_STRINGS} from '../../../constants/strings';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {startGame} from '../state/simonSaysActions';
 import Modal from 'react-native-modal';
 import {COLORS} from '../../../constants/colors';
-import { restartGame } from '../state/simonSaysSlice';
+import {restartGame} from '../state/simonSaysSlice';
 
 const GameOverModal: React.FC = () => {
   const dispatch = useAppDispatch();

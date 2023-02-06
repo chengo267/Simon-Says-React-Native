@@ -21,7 +21,7 @@ const TextButton: React.FC<TextButtonProps> = ({
       disabled={disabled ?? false}
       style={({pressed}) => [
         {
-          opacity: pressed || disabled ? 0.9 : 1,
+          opacity: pressed || disabled ? 0.8 : 1,
         },
         style,
         styles.button,
