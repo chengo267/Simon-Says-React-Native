@@ -21,6 +21,7 @@ const ScoreItem: React.FC<ScoreItemProps> = ({scoreItem}: ScoreItemProps) => {
       dispatch(removeScore(id));
     });
   };
+
   return (
     <View style={styles.item}>
       <View style={styles.card}>

@@ -24,6 +24,18 @@ const GameOverModal: React.FC = () => {
   const [name, setName] = useState('');
   const [addScore, {isLoading: isUpdating}] = useAddScoreMutation();
 
+  const savePressed = () => {
+    addScore({
+      createdAt: new Date(),
+      userId: getUserId(),
+      userName: name,
+      score: score,
+    }).then(() => {
+      dispatch(restartGame());
+      navigate('Scoreboard');
+    });
+  };
+
   const renderUserNameField = () => {
     return (
       <View>
@@ -40,17 +52,7 @@ const GameOverModal: React.FC = () => {
           ) : (
             <ContentButton
               style={styles.inputButton}
-              onPress={() => {
-                addScore({
-                  createdAt: new Date(),
-                  userId: getUserId(),
-                  userName: name,
-                  score: score,
-                }).then(() => {
-                  dispatch(restartGame());
-                  navigate('Scoreboard');
-                });
-              }}
+              onPress={() => savePressed()}
               content={<Text>{GAME_OVER_STRINGS.save}</Text>}
             />
           )}

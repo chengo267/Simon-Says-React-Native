@@ -14,9 +14,7 @@ import {setScoresList} from './state/scoreBoardSlice';
 
 const ScoreboardScreen: React.FC = () => {
   const dispatch = useAppDispatch();
-
   const {data, isLoading} = useGetAllScoresQuery();
-
   const scoresList = useAppSelector(state => state.scoreBoard.scoresList);
 
   useEffect(() => {
