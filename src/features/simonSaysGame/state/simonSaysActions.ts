@@ -21,12 +21,12 @@ export const simonSaying = (): AppThunk => async (dispatch, getState) => {
   dispatch(setIsSimonSays(true));
   await delay(1000);
   for (let i = 0; i < sequence.length; i++) {
-    await delay(500);
+    await delay(700);
     dispatch(setActiveColor(-1));
-    await delay(500);
+    await delay(700);
     dispatch(setActiveColor(sequence[i]));
     sounds[sequence[i]]?.play();
-    await delay(500);
+    await delay(700);
     dispatch(setActiveColor(-1));
   }
   dispatch(setIsSimonSays(false));

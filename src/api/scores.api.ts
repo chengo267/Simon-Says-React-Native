@@ -7,13 +7,16 @@ import {
 } from '@reduxjs/toolkit/query/react';
 import {AddScoreReq, ScoreData} from '../models/simon.models';
 
-const baseQuery = fetchBaseQuery({baseUrl: 'https://locall.host/3000/'});
+const baseQuery = fetchBaseQuery({
+  baseUrl: 'https://expressjs-prisma-production-21e7.up.railway.app/',
+});
 const baseQueryWithErrorHandling: BaseQueryFn<
   string | FetchArgs,
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
+  console.log('res', result);
   if (result.error) {
     console.log(result.error);
     // showMessage({

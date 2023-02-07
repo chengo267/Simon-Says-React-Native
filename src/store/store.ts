@@ -1,11 +1,15 @@
 import {configureStore, ThunkAction, Action} from '@reduxjs/toolkit';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
+import {scoresApi} from '../api/scores.api';
 import simonSaysSlice from '../features/simonSaysGame/state/simonSaysSlice';
 
 const store = configureStore({
   reducer: {
     simonSays: simonSaysSlice,
+    [scoresApi.reducerPath]: scoresApi.reducer,
   },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat(scoresApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
