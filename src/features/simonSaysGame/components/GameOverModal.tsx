@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import TextButton from '../../../components/TextButton';
 import {GAME_OVER_STRINGS, HOME_STRINGS} from '../../../constants/strings';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -16,7 +22,7 @@ const GameOverModal: React.FC = () => {
   const isGameOver = useAppSelector(state => state.simonSays.isGameOver);
   const score = useAppSelector(state => state.simonSays.score);
   const [name, setName] = useState('');
-  const [addScore, _res] = useAddScoreMutation();
+  const [addScore, {isLoading: isUpdating}] = useAddScoreMutation();
 
   const renderUserNameField = () => {
     return (
@@ -29,21 +35,25 @@ const GameOverModal: React.FC = () => {
             value={name}
             onChangeText={newText => setName(newText)}
           />
-          <ContentButton
-            style={styles.inputButton}
-            onPress={() => {
-              addScore({
-                createdAt: new Date(),
-                userId: getUserId(),
-                userName: name,
-                score: score,
-              }).then(() => {
-                dispatch(restartGame());
-                navigate('Scoreboard');
-              });
-            }}
-            content={<Text>{GAME_OVER_STRINGS.save}</Text>}
-          />
+          {isUpdating ? (
+            <ActivityIndicator size={'small'} style={styles.inputButton} />
+          ) : (
+            <ContentButton
+              style={styles.inputButton}
+              onPress={() => {
+                addScore({
+                  createdAt: new Date(),
+                  userId: getUserId(),
+                  userName: name,
+                  score: score,
+                }).then(() => {
+                  dispatch(restartGame());
+                  navigate('Scoreboard');
+                });
+              }}
+              content={<Text>{GAME_OVER_STRINGS.save}</Text>}
+            />
+          )}
         </View>
       </View>
     );

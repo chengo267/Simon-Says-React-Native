@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, Image, StyleSheet, Text, View} from 'react-native';
 import {useDeleteScoreMutation} from '../../../api/scores.api';
 import ContentButton from '../../../components/ContentButton';
 import {ScoreData} from '../../../models/simon.models';
@@ -12,7 +12,7 @@ interface ScoreItemProps {
 }
 
 const ScoreItem: React.FC<ScoreItemProps> = ({scoreItem}: ScoreItemProps) => {
-  const [deleteScore, _res] = useDeleteScoreMutation();
+  const [deleteScore, {isLoading: isUpdating}] = useDeleteScoreMutation();
   const dispatch = useAppDispatch();
   const loggedInUser = getUserId();
 
@@ -23,22 +23,25 @@ const ScoreItem: React.FC<ScoreItemProps> = ({scoreItem}: ScoreItemProps) => {
   };
   return (
     <View style={styles.item}>
-      <View style={{...styles.trash, ...styles.trashArea}}>
-        {loggedInUser === scoreItem.userId && (
-          <ContentButton
-            content={
-              <Image
-                source={require('../../../assets/trash.png')}
-                style={styles.trash}
-              />
-            }
-            onPress={() => deletePressed(scoreItem.id)}
-          />
-        )}
-      </View>
       <View style={styles.card}>
         <Text>{scoreItem.userName}</Text>
         <Text>{scoreItem.score}</Text>
+      </View>
+      <View style={{...styles.trash, ...styles.trashArea}}>
+        {loggedInUser === scoreItem.userId &&
+          (isUpdating ? (
+            <ActivityIndicator size={'small'} style={styles.trash} />
+          ) : (
+            <ContentButton
+              content={
+                <Image
+                  source={require('../../../assets/trash.png')}
+                  style={styles.trash}
+                />
+              }
+              onPress={() => deletePressed(scoreItem.id)}
+            />
+          ))}
       </View>
     </View>
   );
