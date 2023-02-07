@@ -1,11 +1,13 @@
 import {configureStore, ThunkAction, Action} from '@reduxjs/toolkit';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {scoresApi} from '../api/scores.api';
+import scoreBoardSlice from '../features/scoreboard/state/scoreBoardSlice';
 import simonSaysSlice from '../features/simonSaysGame/state/simonSaysSlice';
 
 const store = configureStore({
   reducer: {
     simonSays: simonSaysSlice,
+    scoreBoard: scoreBoardSlice,
     [scoresApi.reducerPath]: scoresApi.reducer,
   },
   middleware: getDefaultMiddleware =>

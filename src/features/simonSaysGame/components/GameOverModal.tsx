@@ -20,28 +20,31 @@ const GameOverModal: React.FC = () => {
 
   const renderUserNameField = () => {
     return (
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.entryInput}
-          placeholder={GAME_OVER_STRINGS.userName}
-          value={name}
-          onChangeText={newText => setName(newText)}
-        />
-        <ContentButton
-          style={styles.inputButton}
-          onPress={() => {
-            addScore({
-              createdAt: new Date(),
-              userId: getUserId(),
-              userName: name,
-              score: score,
-            }).then(() => {
-              dispatch(restartGame());
-              navigate('Scoreboard');
-            });
-          }}
-          content={<Text>{GAME_OVER_STRINGS.save}</Text>}
-        />
+      <View>
+        <Text style={styles.subText}>{GAME_OVER_STRINGS.saveScore}</Text>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.entryInput}
+            placeholder={GAME_OVER_STRINGS.userName}
+            value={name}
+            onChangeText={newText => setName(newText)}
+          />
+          <ContentButton
+            style={styles.inputButton}
+            onPress={() => {
+              addScore({
+                createdAt: new Date(),
+                userId: getUserId(),
+                userName: name,
+                score: score,
+              }).then(() => {
+                dispatch(restartGame());
+                navigate('Scoreboard');
+              });
+            }}
+            content={<Text>{GAME_OVER_STRINGS.save}</Text>}
+          />
+        </View>
       </View>
     );
   };
@@ -51,8 +54,8 @@ const GameOverModal: React.FC = () => {
       <View style={styles.modal}>
         <Text style={styles.text}>{GAME_OVER_STRINGS.gameOver}</Text>
         <Text style={styles.subText}>{HOME_STRINGS.score + ': ' + score}</Text>
-        <Text style={styles.subText}>{GAME_OVER_STRINGS.saveScore}</Text>
-        {renderUserNameField()}
+
+        {score > 0 && renderUserNameField()}
         <TextButton
           title={GAME_OVER_STRINGS.newGame}
           style={styles.startButton}

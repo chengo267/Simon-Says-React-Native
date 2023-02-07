@@ -19,10 +19,6 @@ const baseQueryWithErrorHandling: BaseQueryFn<
   console.log('res', result);
   if (result.error) {
     console.log(result.error);
-    // showMessage({
-    //   message: i18n.t('error.somethingWentWrong'),
-    //   type: 'danger',
-    // });
   }
   return result;
 };
@@ -44,7 +40,7 @@ export const scoresApi = createApi({
     deleteScore: builder.mutation<{status: string}, string>({
       query(id: string) {
         return {
-          url: `posts/${id}`,
+          url: `scores/${id}`,
           method: 'DELETE',
         };
       },
